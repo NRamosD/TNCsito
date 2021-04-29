@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "502845134692",
+    "project_id": "tncsito-135d4",
+    "storage_bucket": "tncsito-135d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:502845134692:android:87c3b68c61fcf621094c71",
+        "android_client_info": {
+          "package_name": "com.example.tncsito"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "502845134692-a4hrcst6k63nuvgqhid20uo6trcq50k1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwbBZzA5BT9umNHJKJFG037LZJqGDt48M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "502845134692-a4hrcst6k63nuvgqhid20uo6trcq50k1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

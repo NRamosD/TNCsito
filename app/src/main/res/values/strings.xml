@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TNCsito</string>
+    <string name="onlyCome">Ven</string>
+    <string name="ComeWith">Trae</string>
+    <string name="YesNo">Si o No</string>
+    <string name="Emergency">Emergencia</string>
+    <string name="toNeed">¿Qué necesitas?</string>
+    <string name="leaveOut">Salir</string>
+
+</resources>
