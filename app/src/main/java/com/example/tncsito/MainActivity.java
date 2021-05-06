@@ -10,8 +10,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,17 +25,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements dialogComeWithFragment.dialogListener, dialogYesNoFragment.dialogListenerYesNo {
+public class MainActivity extends AppCompatActivity implements dialogComeWithFragment.dialogListener, dialogYesNoFragment.dialogListenerYesNo, dialogWho.dialogListener {
 
     MaterialButton come, comeWith, yesNo, emergency,leave;
 
-    //private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     List<Pedido> listPedidos = new ArrayList<>();
 
     private int tipo;
     private String mensaje;
+    private String nombre="";
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+
     //getters setters
     public int getTipo() {
         return tipo;
@@ -66,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements dialogComeWithFra
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("req");
-        //mAuth = FirebaseAuth.getInstance();
 
         //Salir
         leave.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements dialogComeWithFra
             public void onClick(View v) {
                 try {
                     tipo = 1;
-                    databaseReference.push().setValue(new Pedido(tipo, " "," "));
+                    databaseReference.push().setValue(new Pedido(tipo, getNombre()," "));
                     Toast.makeText(getApplicationContext(),"Llamado de emergencia enviado 👌",Toast.LENGTH_SHORT).show();
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(),"No se pudo enviar :c. Revise su conexión a internet.",Toast.LENGTH_SHORT).show();
@@ -141,6 +155,8 @@ public class MainActivity extends AppCompatActivity implements dialogComeWithFra
             }
         });
 
+        dialogWho dWho = new dialogWho();
+        dWho.show(getSupportFragmentManager(),"quien es");
     }
 
     //Añadir Pedido
@@ -154,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements dialogComeWithFra
     public void onDialogPositiveClickYesNo(String mensaje){
         setMensaje(mensaje);
         try {
-            databaseReference.push().setValue(new Pedido(4, " ",getMensaje()));
+            databaseReference.push().setValue(new Pedido(4, getNombre(),getMensaje()));
             Toast.makeText(getApplicationContext(),"Llamado de emergencia enviado 👌",Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"No se pudo enviar :c. Revise su conexión a internet.",Toast.LENGTH_SHORT).show();
@@ -168,16 +184,31 @@ public class MainActivity extends AppCompatActivity implements dialogComeWithFra
         setMensaje(mensaje);
         try {
             if (tipo == 2){
-                databaseReference.push().setValue(new Pedido(tipo, " ",getMensaje()));
+                databaseReference.push().setValue(new Pedido(tipo, getNombre(),getMensaje()));
                 Toast.makeText(getApplicationContext(),"Pedido enviado 👌",Toast.LENGTH_SHORT).show();
             }
             if(tipo == 3){
-                databaseReference.push().setValue(new Pedido(tipo, " ",getMensaje()));
+                databaseReference.push().setValue(new Pedido(tipo, getNombre(),getMensaje()));
                 Toast.makeText(getApplicationContext(),"Pregunta enviada 👌",Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"No se pudo enviar :c. Revise su conexión a internet.",Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onDialogPositiveClickWho(String nombre) {
+        if (nombre.equals("")){
+            setNombre("Anónimo");
+        }else{
+            setNombre(nombre);
+        }
     }
 }
