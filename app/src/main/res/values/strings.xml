@@ -7,5 +7,7 @@
     <string name="toNeed">¿Qué necesitas?</string>
     <string name="leaveOut">Salir</string>
     <string name="who">¿Quién eres?</string>
+    <string name="nameRoom">Nombre de la Sala</string>
+    <string name="passRoom">Contraseña</string>
 
 </resources>

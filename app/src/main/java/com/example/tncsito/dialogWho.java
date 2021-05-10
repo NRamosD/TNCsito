@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,8 @@ public class dialogWho extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         View v = inflater.inflate(R.layout.dialog_who, null);
         final EditText texto = (EditText)v.findViewById(R.id.nombre);
+        final EditText name = (EditText)v.findViewById(R.id.nameSala);
+        final EditText pass = (EditText)v.findViewById(R.id.passSala);
 
         builder.setView(v)
                 // Add action buttons
@@ -35,13 +38,15 @@ public class dialogWho extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         String nombre = texto.getText().toString();
-                        listener.onDialogPositiveClickWho(nombre);
+                        String sala = name.getText().toString();
+                        String pw = pass.getText().toString();
+                        listener.onDialogPositiveClickWho(nombre,sala,pw);
                     }
                 })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        String nombre = "";
-                        listener.onDialogPositiveClickWho(nombre);
+                        /*String nombre = "";
+                        listener.onDialogPositiveClickWho(nombre);*/
                     }
                 });
         return builder.create();
@@ -51,7 +56,7 @@ public class dialogWho extends DialogFragment {
 
     //Para enviar las respuesas al activity
     public interface dialogListener {
-        public void onDialogPositiveClickWho(String nombre);
+        public void onDialogPositiveClickWho(String nombre,String sala,String pw);
         //public void onDialogNegativeClick(DialogFragment dialog);
     }
 
@@ -72,4 +77,8 @@ public class dialogWho extends DialogFragment {
                     + " must implement NoticeDialogListener");
         }
     }
+
+
+
+
 }
